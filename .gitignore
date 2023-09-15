@@ -39,3 +39,4 @@ dotenv-env
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+process-env.d.ts
