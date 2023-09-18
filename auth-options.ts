@@ -1,10 +1,10 @@
-import { NextAuthOptions } from 'next-auth';
-import { PrismaAdapter } from '@auth/prisma-adapter';
-import Google from 'next-auth/providers/google';
-import Credentials from 'next-auth/providers/credentials';
-import bcrypt from 'bcrypt';
+import { NextAuthOptions } from 'next-auth'
+import { PrismaAdapter } from '@auth/prisma-adapter'
+import Google from 'next-auth/providers/google'
+import Credentials from 'next-auth/providers/credentials'
+import bcrypt from 'bcrypt'
 
-import prisma from '@/lib/prisma-client';
+import prisma from '@/lib/prisma-client'
 
 export const authOptions = {
   adapter: PrismaAdapter(prisma),
@@ -22,35 +22,35 @@ export const authOptions = {
       async authorize(credentials, req) {
         // Add logic here to look up the user from the credentials supplied.
         const isCredentialsMissing =
-          !credentials?.email || !credentials?.password;
+          !credentials?.email || !credentials?.password
         if (isCredentialsMissing) {
-          throw new Error('Please enter your email and password both');
+          throw new Error('Please enter your email and password both')
         }
 
         const user = await prisma.user.findUnique({
           where: {
             email: credentials.email,
           },
-        });
+        })
 
-        const isUserNotFound = !user;
+        const isUserNotFound = !user
         const isUserRegisteredThroughSocialLogin =
-          !!user && !user?.hashedPassword;
+          !!user && !user?.hashedPassword
 
         if (isUserNotFound || isUserRegisteredThroughSocialLogin) {
-          throw new Error('Incorrect credentials');
+          throw new Error('Incorrect credentials')
         }
 
         const isPasswordCorrect = await bcrypt.compare(
           credentials.password,
-          user.hashedPassword!,
-        );
+          user.hashedPassword as string,
+        )
 
         if (!isPasswordCorrect) {
-          throw new Error('Incorrect credentials');
+          throw new Error('Incorrect credentials')
         }
 
-        return user;
+        return user
       },
     }),
   ],
@@ -59,4 +59,4 @@ export const authOptions = {
     strategy: 'jwt',
   },
   secret: process.env.NEXTAUTH_SECRET,
-} satisfies NextAuthOptions;
+} satisfies NextAuthOptions
