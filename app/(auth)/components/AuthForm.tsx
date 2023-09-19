@@ -1,9 +1,13 @@
 'use client'
 
-import { usePathname } from 'next/navigation'
-import { useForm } from 'react-hook-form'
+import { useEffect } from 'react'
+import { usePathname, useRouter } from 'next/navigation'
+import Link from 'next/link'
+import { useSession, signIn } from 'next-auth/react'
 import { z } from 'zod'
+import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+
 import {
   Form,
   FormControl,
@@ -14,7 +18,6 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import Link from 'next/link'
 
 const formSchema = z.object({
   name: z.string().min(2).max(50),
@@ -29,7 +32,15 @@ const formSchema = z.object({
 
 const AuthForm = () => {
   const pathname = usePathname()
-  console.log(pathname)
+
+  const router = useRouter()
+  const session = useSession()
+
+  useEffect(() => {
+    if (session.status === 'authenticated') {
+      router.push('/')
+    }
+  }, [session.status])
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -41,7 +52,45 @@ const AuthForm = () => {
   })
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
+    console.log('isSubmitting', form.formState.isSubmitting)
     console.log(data)
+
+    if (pathname === '/register') {
+      console.log('Submit register started')
+
+      fetch('/api/register', {
+        method: 'POST',
+        body: JSON.stringify(data),
+      })
+        .then(() => {
+          signIn('credentials', { ...data, callbackUrl: '/' })
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+
+      console.log('Submit register ended')
+    }
+
+    if (pathname === '/login') {
+      console.log('Submit login started')
+
+      signIn('credentials', {
+        ...data,
+        redirect: false,
+        callbackUrl: '/',
+      }).then((callback) => {
+        console.log(callback)
+        if (callback?.ok) {
+          console.log('callback ok')
+        }
+        if (callback?.error) {
+          console.log('callback error')
+        }
+      })
+
+      console.log('Submit login ended')
+    }
   }
 
   return (
@@ -89,7 +138,11 @@ const AuthForm = () => {
               </FormItem>
             )}
           />
-          <Button type="submit" className="w-full">
+          <Button
+            type="submit"
+            className="w-full"
+            disabled={form.formState.isSubmitting}
+          >
             Submit
           </Button>
           <div className="flex items-center justify-between">
