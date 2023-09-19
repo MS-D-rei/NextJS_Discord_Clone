@@ -1,9 +1,8 @@
 'use client'
 
-import { useEffect } from 'react'
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import Link from 'next/link'
-import { useSession, signIn } from 'next-auth/react'
+import { signIn } from 'next-auth/react'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -32,15 +31,6 @@ const formSchema = z.object({
 
 const AuthForm = () => {
   const pathname = usePathname()
-
-  const router = useRouter()
-  const session = useSession()
-
-  useEffect(() => {
-    if (session.status === 'authenticated') {
-      router.push('/')
-    }
-  }, [session.status])
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
