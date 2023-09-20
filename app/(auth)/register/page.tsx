@@ -1,5 +1,6 @@
 import Image from 'next/image'
-import AuthForm from '@/app/(auth)/_components/AuthForm'
+
+import RegisterForm from '@/app/(auth)/_components/RegisterForm'
 import discordLogo from '@/public/images/discord-logo-white.svg'
 
 const RegisterPage = () => {
@@ -10,7 +11,7 @@ const RegisterPage = () => {
         className="hidden md:flex md:flex-col md:w-full md:items-center md:justify-center 
         md:max-w-md md:px-8 md:py-12 md:bg-gray-500 md:rounded-tl-lg md:rounded-bl-lg"
       >
-        <Image src={discordLogo} alt="logo" className="py-8" />
+        <Image src={discordLogo} alt="logo" className="py-8" priority={true} />
         <h1 className="text-5xl font-bold text-white">Clone</h1>
       </div>
       {/* left side form space */}
@@ -23,7 +24,7 @@ const RegisterPage = () => {
             Create your account
           </h2>
         </div>
-        <AuthForm />
+        <RegisterForm />
       </div>
     </div>
   )

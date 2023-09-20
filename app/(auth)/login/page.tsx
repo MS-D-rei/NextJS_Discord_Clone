@@ -1,6 +1,7 @@
-import AuthForm from '@/app/(auth)/_components/AuthForm'
 import Image from 'next/image'
+
 import discordLogo from '@/public/images/discord-logo-white.svg'
+import LoginForm from '@/app/(auth)/_components/LoginForm'
 
 const LoginPage = () => {
   return (
@@ -10,7 +11,7 @@ const LoginPage = () => {
         className="hidden md:flex md:flex-col md:w-full md:items-center md:justify-center 
         md:max-w-md md:px-8 md:py-12 md:bg-gray-500 md:rounded-tl-lg md:rounded-bl-lg"
       >
-        <Image src={discordLogo} alt="logo" className="py-8" />
+        <Image src={discordLogo} alt="logo" className="py-8" priority={true} />
         <h1 className="text-5xl font-bold text-white">Clone</h1>
       </div>
       {/* left side form space */}
@@ -23,7 +24,7 @@ const LoginPage = () => {
             Welcome back!
           </h2>
         </div>
-        <AuthForm />
+        <LoginForm />
       </div>
     </div>
   )
