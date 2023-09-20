@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt'
 import { NextResponse } from 'next/server'
 
-import prismaClient from '@/libs/prisma-client'
+import prismaClient from '@/lib/prisma-client'
 
 console.log('Registering user started')
 performance.mark('register-start')

@@ -1,4 +1,4 @@
-import AuthForm from '@/app/(auth)/components/AuthForm'
+import AuthForm from '@/app/(auth)/_components/AuthForm'
 import Image from 'next/image'
 import discordLogo from '@/public/images/discord-logo-white.svg'
 

@@ -48,7 +48,7 @@ const AuthForm = () => {
     if (pathname === '/register') {
       console.log('Submit register started')
 
-      fetch('/api/register', {
+      fetch('/services/register', {
         method: 'POST',
         body: JSON.stringify(data),
       })

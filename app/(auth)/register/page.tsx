@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import AuthForm from '@/app/(auth)/components/AuthForm'
+import AuthForm from '@/app/(auth)/_components/AuthForm'
 import discordLogo from '@/public/images/discord-logo-white.svg'
 
 const RegisterPage = () => {
