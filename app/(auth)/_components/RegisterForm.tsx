@@ -28,7 +28,7 @@ const formSchema = z.object({
 
 // https://react-hook-form.com/get-started#SchemaValidation
 
-const RegisterForm = () => {
+export const RegisterForm = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -121,5 +121,3 @@ const RegisterForm = () => {
     </div>
   )
 }
-
-export default RegisterForm

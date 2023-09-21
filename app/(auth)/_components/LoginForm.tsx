@@ -5,6 +5,7 @@ import { signIn } from 'next-auth/react'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useRouter } from 'next/navigation'
 
 import {
   Form,
@@ -16,7 +17,6 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import { useRouter } from 'next/navigation'
 
 const formSchema = z.object({
   email: z
@@ -30,7 +30,7 @@ const formSchema = z.object({
     .max(50, { message: 'Password must be within 50 characters' }),
 })
 
-const LoginForm = () => {
+export const LoginForm = () => {
   const router = useRouter()
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -116,5 +116,3 @@ const LoginForm = () => {
     </div>
   )
 }
-
-export default LoginForm
