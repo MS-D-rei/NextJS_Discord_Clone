@@ -3,8 +3,8 @@
 // https://zenn.dev/crayfisher_zari/articles/51a5add64ef5b7
 
 import Image from 'next/image'
-import discordLogoWhite from '@/public/discord-logo-white.svg'
-import discordLogoBlack from '@/public/discord-logo-black.svg'
+import discordLogoWhite from '@/public/images/discord-logo-white.svg'
+import discordLogoBlack from '@/public/images/discord-logo-black.svg'
 
 export const FormLogo = () => {
   return (
