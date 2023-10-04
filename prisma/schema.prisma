@@ -24,6 +24,15 @@ model User {
   // 1 : m relation with Account
   accounts Account[]
 
+  // 1 : m relation with Server
+  servers Server[]
+
+  // 1 : m relation with Member
+  members Member[]
+
+  // 1 : m relation with Channel
+  channels Channel[]
+
   // register User model as "users" table at database side
   @@map("users")
 }
@@ -49,6 +58,88 @@ model Account {
 
   // combination of provider and providerAccountId should be unique
   @@unique([provider, providerAccountId])
+  // add index to userId column
+  @@index([userId], map: "user_id")
   // register Account model as "accounts" table at database side
   @@map("accounts")
+}
+
+model Server {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  name       String
+  image      String @db.Text
+  invideCode String @map("invite_code") @db.Text
+
+  // m : 1 relation with User 
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @map("user_id")
+
+  // 1 : m relation with Member
+  members Member[]
+
+  // 1 : m relation with Channel
+  channels Channel[]
+
+  // add index to userId column
+  @@index(fields: [userId], map: "user_id")
+  // register Server model as "servers" table at database side
+  @@map("servers")
+}
+
+enum MemberRole {
+  ADMIN
+  MODERATOR
+  GUEST
+}
+
+model Member {
+  id        String     @id @default(cuid())
+  role      MemberRole @default(GUEST)
+  createdAt DateTime   @default(now()) @map("created_at")
+  updatedAt DateTime   @updatedAt @map("updated_at")
+
+  // m : 1 relation with User
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @map("user_id")
+
+  // m : 1 relation with Server
+  server   Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  serverId String @map("server_id")
+
+  // add indexes 
+  @@index(fields: [userId], map: "user_id")
+  @@index(fields: [serverId], map: "server_id")
+  // register Member model as "members" table at database side
+  @@map("members")
+}
+
+enum ChannelType {
+  TEXT
+  AUDIO
+  VIDEO
+}
+
+model Channel {
+  id        String      @id @default(cuid())
+  createdAt DateTime    @default(now()) @map("created_at")
+  updatedAt DateTime    @updatedAt @map("updated_at")
+  name      String
+  type      ChannelType @default(TEXT)
+
+  // m : 1 relation with User
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @map("user_id")
+
+  // m : 1 relation with Server
+  server   Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
+  serverId String @map("server_id")
+
+  // add indexes
+  @@index(fields: [userId], map: "user_id")
+  @@index(fields: [serverId], map: "server_id")
+  // register Channel model as "channels" table at database side
+  @@map("channels")
 }
