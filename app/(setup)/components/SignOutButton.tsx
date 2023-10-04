@@ -1,11 +1,12 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
+import { ComponentPropsWithRef } from 'react'
 import { signOut } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
 
 import { Button } from '@/components/ui/button'
 
-export default function Home() {
+const SignOutButton: React.FC<ComponentPropsWithRef<'button'>> = () => {
   const router = useRouter()
 
   const handleSignOut = async () => {
@@ -14,15 +15,15 @@ export default function Home() {
       redirect: false,
     })
     console.log(signOutResponse)
+    // => { url: "http://localhost:3000/login" }
     router.push('/login')
   }
 
   return (
-    <div>
-      <h1>discord clone</h1>
-      <Button variant="default" size="default" onClick={handleSignOut}>
-        Sign out
-      </Button>
-    </div>
+    <Button variant="default" size="default" onClick={handleSignOut}>
+      Sign out
+    </Button>
   )
 }
+
+export default SignOutButton
