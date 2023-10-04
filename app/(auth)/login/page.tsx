@@ -11,7 +11,7 @@ const LoginPage = () => {
       {/* right side form space */}
       <div
         className="w-full max-w-md px-8 py-12 border border-gray-200 md:border-none
-        rounded-md md:rounded-none md:rounded-tr-lg md:rounded-br-lg
+        rounded-md md:rounded-none
         shadow-md md:shadow-none"
       >
         <div className="flex flex-col items-center">

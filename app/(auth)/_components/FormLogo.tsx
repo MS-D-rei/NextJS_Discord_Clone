@@ -3,10 +3,9 @@
 // https://zenn.dev/crayfisher_zari/articles/51a5add64ef5b7
 
 import Image from 'next/image'
-import discordLogoWhite from '@/public/images/discord-logo-white.svg'
 import discordLogoBlack from '@/public/images/discord-logo-black.svg'
 
-export const FormLogo = () => {
+export const FormLogo = async () => {
   return (
     <div
       className="hidden md:flex md:flex-col md:w-full md:items-center md:justify-center 
@@ -19,7 +18,7 @@ export const FormLogo = () => {
         height={250}
         priority={true}
       />
-      <h1 className="pt-8 text-5xl font-bold">Clone</h1>
+      <h1 className="pt-8 text-4xl font-bold">Clone</h1>
     </div>
   )
 }
