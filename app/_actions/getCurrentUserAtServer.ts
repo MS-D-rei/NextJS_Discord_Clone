@@ -1,10 +1,11 @@
-import { getSessionAtServer } from '@/app/_helper/getSessionAtServer'
+import { getSessionAtServer } from '@/app/_actions/getSessionAtServer'
 import prisma from '@/lib/prisma-client'
 
-export const getCurrentUser = async () => {
+export const getCurrentUserAtServer = async () => {
   try {
     const session = await getSessionAtServer()
-    console.log("getCurrentUser session", session);
+    // console.log('getCurrentUser session', session)
+    // getCurrentUser session { user: { name: 'John', email: 'test1@email.com', image: null } }
     if (!session?.user?.email) {
       return null
     }
@@ -20,7 +21,7 @@ export const getCurrentUser = async () => {
     }
 
     return currentUser
-  } catch (err: any) {
+  } catch (err) {
     console.log(err)
     return null
   }
