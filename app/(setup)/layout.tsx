@@ -2,7 +2,7 @@ import { PropsWithChildren } from 'react'
 
 const SetupLayout: React.FC<PropsWithChildren> = ({ children }) => {
   return (
-    <main>{children}</main>
+    <>{children}</>
   )
 }
 
