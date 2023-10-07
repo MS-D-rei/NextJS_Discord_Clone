@@ -14,11 +14,8 @@ const ImageUpload: React.FC = () => {
   const selectedFileRef = useRef<HTMLInputElement>(null)
 
   // can use useFormContext() to get the form context
-  const form: UseFormReturn<
-    { serverName: string; serverImage: string },
-    any,
-    undefined
-  > = useFormContext()
+  const form: UseFormReturn<{ name: string; image: string }, any, undefined> =
+    useFormContext()
 
   const handleUploadClick = () => {
     selectedFileRef.current?.click()
@@ -28,6 +25,8 @@ const ImageUpload: React.FC = () => {
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const reader = new FileReader()
 
+    console.log(event.target.files?.[0])
+
     if (event.target.files?.[0]) {
       reader.readAsDataURL(event.target.files[0])
     }
@@ -35,14 +34,14 @@ const ImageUpload: React.FC = () => {
     reader.onload = (readerEvent) => {
       if (readerEvent.target?.result) {
         setSelectedFile(readerEvent.target.result as string)
-        form.setValue('serverImage', readerEvent.target.result as string)
+        form.setValue('image', readerEvent.target.result as string)
       }
     }
   }
 
   const handleRemoveClick = () => {
     setSelectedFile('')
-    form.setValue('serverImage', '')
+    form.setValue('image', '')
   }
 
   // https://react-hook-form.com/faqs#Howtosharerefusage
@@ -62,8 +61,8 @@ const ImageUpload: React.FC = () => {
     <div className="flex items-center justify-center">
       <FormField
         control={form.control}
-        name="serverImage"
-        render={({ field: { ref, onChange, value, ...rest }, formState }) => (
+        name="image"
+        render={({ field: { ref, value, ...rest }, formState }) => (
           <FormItem>
             <FormControl>
               <input
@@ -81,23 +80,34 @@ const ImageUpload: React.FC = () => {
         )}
       />
       {selectedFile ? (
-        <div className="flex flex-col items-center space-y-4">
+        <div className="relative h-20 w-20">
           <Image
             src={selectedFile}
-            width={200}
-            height={200}
+            fill
             alt="server image"
+            className="rounded-full"
           />
-          <Button type="button" onClick={handleRemoveClick}>
-            Remove
-          </Button>
+          <button
+            type="button"
+            onClick={handleRemoveClick}
+            className="absolute text-white font-thin
+            bg-rose-500 hover:bg-rose-500/80 rounded-full
+            px-2 py-0 top-0 right-0 shadow-sm"
+          >
+            X
+          </button>
         </div>
       ) : (
-        <div>
-          <Button type="button" onClick={handleUploadClick}>
-            Upload
-          </Button>
-        </div>
+        <Button
+          type="button"
+          onClick={handleUploadClick}
+          className={`h-40 w-40 bg-white text-indigo-500 font-bold
+            border-4 border-dashed border-indigo-200
+            hover:bg-sky-300/50
+          `}
+        >
+          Upload image
+        </Button>
       )}
     </div>
   )
