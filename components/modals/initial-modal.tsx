@@ -26,10 +26,10 @@ import { Button } from '@/components/ui/button'
 import ImageUpload from '@/components/ImageUpload'
 
 const formSchema = z.object({
-  serverName: z
+  name: z
     .string()
     .min(3, { message: 'Server name must be at least 3 characters' }),
-  serverImage: z.string().url({ message: 'Server image must be a valid URL' }),
+  image: z.string().url({ message: 'Server image must be a valid URL' }),
 })
 
 const InitialModal: React.FC = () => {
@@ -42,8 +42,8 @@ const InitialModal: React.FC = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      serverName: '',
-      serverImage: '',
+      name: '',
+      image: '',
     },
   })
 
@@ -69,37 +69,39 @@ const InitialModal: React.FC = () => {
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <div className="px-6 pb-8">
-              {/* Image Upload */}
-              <ImageUpload />
-              {/* Server Name */}
-              <FormField
-                control={form.control}
-                name="serverName"
-                render={({ field, formState }) => (
-                  <FormItem>
-                    <FormLabel
-                      htmlFor="serverName"
-                      className="uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70 pl-2"
-                    >
-                      Server Name
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        id="serverName"
-                        disabled={form.formState.isSubmitting}
-                        placeholder="Enter server name"
-                        className={`bg-zinc-300/50 text-black border-0
-                        focus-visible:ring-0 focus-visible:ring-offset-0`}
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage>
-                      {formState.errors.serverName?.message}
-                      {formState.errors.serverImage?.message}
-                    </FormMessage>
-                  </FormItem>
-                )}
-              />
+              <div className="flex flex-col space-y-4">
+                {/* Image Upload */}
+                <ImageUpload />
+                {/* Server Name */}
+                <FormField
+                  control={form.control}
+                  name="name"
+                  render={({ field, formState }) => (
+                    <FormItem>
+                      <FormLabel
+                        htmlFor="serverName"
+                        className="uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70 pl-2"
+                      >
+                        Server Name
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          id="name"
+                          disabled={form.formState.isSubmitting}
+                          placeholder="Enter server name"
+                          className={`bg-zinc-300/50 text-black border-0
+                          focus-visible:ring-0 focus-visible:ring-offset-0`}
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage>
+                        {formState.errors.name?.message}
+                        {formState.errors.image?.message}
+                      </FormMessage>
+                    </FormItem>
+                  )}
+                />
+              </div>
             </div>
             <DialogFooter className="bg-gray-100 px-6 py-4">
               <Button
