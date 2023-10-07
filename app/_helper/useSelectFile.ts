@@ -3,10 +3,10 @@ import { ChangeEvent, useState } from 'react'
 export const useSelectFile = () => {
   const [selectedFile, setSelectedFile] = useState<string>()
 
-  const selectFile = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleUploadImage = (event: ChangeEvent<HTMLInputElement>) => {
     const reader = new FileReader()
 
-    // console.log(event.target.files);
+    console.log(event.target.files)
     /*
     FileList {0: File, length: 1}
     0: File
@@ -34,6 +34,6 @@ export const useSelectFile = () => {
   return {
     selectedFile,
     setSelectedFile,
-    selectFile,
+    handleUploadImage,
   }
 }
