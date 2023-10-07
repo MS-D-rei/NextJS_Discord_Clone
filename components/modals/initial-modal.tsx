@@ -23,6 +23,7 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
+import ImageUpload from '@/components/ImageUpload'
 
 const formSchema = z.object({
   serverName: z
@@ -55,7 +56,7 @@ const InitialModal: React.FC = () => {
 
   return (
     <Dialog open={true}>
-      <DialogContent className="bg-white text-black p-0 overflow-hidden">
+      <DialogContent className="bg-white max-h-screen text-black p-0 overflow-y-auto">
         <DialogHeader className="pt-8 px-6">
           <DialogTitle className="text-2xl text-center font-bold">
             Customize your server
@@ -68,7 +69,9 @@ const InitialModal: React.FC = () => {
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <div className="px-6 pb-8">
-              <div>TODO: Image upload</div>
+              {/* Image Upload */}
+              <ImageUpload />
+              {/* Server Name */}
               <FormField
                 control={form.control}
                 name="serverName"
@@ -82,6 +85,7 @@ const InitialModal: React.FC = () => {
                     </FormLabel>
                     <FormControl>
                       <Input
+                        id="serverName"
                         disabled={form.formState.isSubmitting}
                         placeholder="Enter server name"
                         className={`bg-zinc-300/50 text-black border-0
@@ -91,13 +95,18 @@ const InitialModal: React.FC = () => {
                     </FormControl>
                     <FormMessage>
                       {formState.errors.serverName?.message}
+                      {formState.errors.serverImage?.message}
                     </FormMessage>
                   </FormItem>
                 )}
               />
             </div>
             <DialogFooter className="bg-gray-100 px-6 py-4">
-              <Button disabled={form.formState.isSubmitting} variant="primary">
+              <Button
+                type="submit"
+                disabled={form.formState.isSubmitting}
+                variant="primary"
+              >
                 Create
               </Button>
             </DialogFooter>
