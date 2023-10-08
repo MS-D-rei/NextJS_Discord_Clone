@@ -24,6 +24,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import ImageUpload from '@/components/ImageUpload'
+import { useSelectFile } from '@/app/_helper/useSelectFile'
 
 const formSchema = z.object({
   name: z
@@ -34,6 +35,8 @@ const formSchema = z.object({
 
 const InitialModal: React.FC = () => {
   const [isMounted, setIsMounted] = useState(false)
+
+  const { selectedFile, setSelectedFile } = useSelectFile()
 
   useEffect(() => {
     setIsMounted(true)
@@ -71,7 +74,10 @@ const InitialModal: React.FC = () => {
             <div className="px-6 pb-8">
               <div className="flex flex-col space-y-4">
                 {/* Image Upload */}
-                <ImageUpload />
+                <ImageUpload
+                  selectedFile={selectedFile}
+                  setSelectedFile={setSelectedFile}
+                />
                 {/* Server Name */}
                 <FormField
                   control={form.control}

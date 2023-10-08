@@ -7,9 +7,15 @@ import { UseFormReturn, useFormContext } from 'react-hook-form'
 import { Button } from '@/components/ui/button'
 import { FormControl, FormField, FormItem } from '@/components/ui/form'
 
-const ImageUpload: React.FC = () => {
-  // need to show the image preview
-  const [selectedFile, setSelectedFile] = useState<string>()
+interface ImageUploadProps extends React.ComponentPropsWithRef<'div'> {
+  selectedFile: string | undefined
+  setSelectedFile: React.Dispatch<React.SetStateAction<string | undefined>>
+}
+
+const ImageUpload: React.FC<ImageUploadProps> = ({
+  selectedFile,
+  setSelectedFile,
+}) => {
   // need to invoke the hidden input
   const selectedFileRef = useRef<HTMLInputElement>(null)
 
