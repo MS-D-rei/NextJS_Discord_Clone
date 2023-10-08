@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -35,6 +36,7 @@ const formSchema = z.object({
 
 const InitialModal: React.FC = () => {
   const [isMounted, setIsMounted] = useState(false)
+  const router = useRouter()
 
   const { selectedFile, setSelectedFile } = useSelectFile()
 
@@ -52,9 +54,25 @@ const InitialModal: React.FC = () => {
 
   if (!isMounted) return null
 
-  const onSubmit = (data: z.infer<typeof formSchema>) => {
+  const onSubmit = async (data: z.infer<typeof formSchema>) => {
     console.log('isSubmitting', form.formState.isSubmitting)
     console.log(data)
+
+    try {
+      const response = await fetch('/api/server', {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      form.reset()
+      setSelectedFile('')
+      router.refresh()
+      window.location.reload()
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   return (
