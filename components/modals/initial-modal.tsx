@@ -55,8 +55,7 @@ const InitialModal: React.FC = () => {
   if (!isMounted) return null
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
-    console.log('isSubmitting', form.formState.isSubmitting)
-    console.log(data)
+    console.log('formData', data)
 
     try {
       const response = await fetch('/api/server', {
@@ -70,6 +69,7 @@ const InitialModal: React.FC = () => {
       setSelectedFile('')
       router.refresh()
       window.location.reload()
+      console.log('response', response)
     } catch (err) {
       console.log(err)
     }
