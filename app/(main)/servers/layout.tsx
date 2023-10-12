@@ -1,6 +1,6 @@
 import { PropsWithChildren } from 'react'
 
-import NavigationSidebar from '@/components/navigation/navigation-sidebar'
+import NavigationSidebar from '@/components/navigation-sidebar'
 
 const ServerIdLayout: React.FC<PropsWithChildren> = ({ children }) => {
   return (

@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation'
 import prismaClient from '@/lib/prisma-client'
 import { useCurrentUser } from '@/app/_helper/useCurrentUser'
 import { Separator } from '@/components/ui/separator'
+import NavigationAction from '@/components/navigation-sidebar/navigation-action'
 
 const NavigationSidebar: React.FC = async () => {
   const currentUser = await useCurrentUser()
@@ -24,8 +25,7 @@ const NavigationSidebar: React.FC = async () => {
 
   return (
     <div className="flex flex-col h-full w-full items-center text-primary bg-[#E3E5E8] py-3">
-      {/* TODO: NavigationSidebar */}
-      {/* <NavigationAction /> */}
+      <NavigationAction />
       <div>sidebar</div>
       <Separator orientation='horizontal' className="h-[2px] w-10 bg-zinc-300 rounded-md mx-auto" />
     </div>
