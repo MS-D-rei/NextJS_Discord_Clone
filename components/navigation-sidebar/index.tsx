@@ -34,7 +34,7 @@ const NavigationSidebar: React.FC = async () => {
       />
       <ScrollArea className="flex-1 w-full">
         {servers.map((server) => (
-          <div key={server.id}>
+          <div key={server.id} className='mb-4'>
             <NavigationItem
               id={server.id}
               name={server.name}
@@ -43,6 +43,11 @@ const NavigationSidebar: React.FC = async () => {
           </div>
         ))}
       </ScrollArea>
+      <div className='flex flex-col items-center gap-y-4 mt-auto pb-3'>
+        {/* TODO: Add these components */}
+        {/* <ModeToggle /> */}
+        {/* <UserSettings /> */}
+      </div>
     </div>
   )
 }
