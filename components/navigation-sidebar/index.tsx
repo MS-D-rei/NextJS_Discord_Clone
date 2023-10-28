@@ -6,6 +6,7 @@ import { Separator } from '@/components/ui/separator'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import NavigationAction from '@/components/navigation-sidebar/navigation-action'
 import NavigationItem from '@/components/navigation-sidebar/navigation-item'
+import UserAvatar from '@/components/user-avatar'
 
 const NavigationSidebar: React.FC = async () => {
   const currentUser = await useCurrentUser()
@@ -46,7 +47,7 @@ const NavigationSidebar: React.FC = async () => {
       <div className='flex flex-col items-center gap-y-4 mt-auto pb-3'>
         {/* TODO: Add these components */}
         {/* <ModeToggle /> */}
-        {/* <UserSettings /> */}
+        <UserAvatar user={currentUser} />
       </div>
     </div>
   )
