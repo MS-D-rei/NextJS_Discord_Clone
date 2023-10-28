@@ -1,5 +1,5 @@
-import { User } from '@prisma/client'
 import { getCurrentUserAtServer } from '@/app/_actions/getCurrentUserAtServer'
+import { UserInfo } from '@/types/user-info'
 
 export const useCurrentUser = async () => {
   const currentUserData = await getCurrentUserAtServer()
@@ -8,8 +8,9 @@ export const useCurrentUser = async () => {
     return null
   }
 
-  const currentUser: Partial<User> = {
+  const currentUser: UserInfo = {
     id: currentUserData.id,
+    createdAt: currentUserData.createdAt,
     name: currentUserData?.name,
     email: currentUserData.email,
     image: currentUserData?.image,
